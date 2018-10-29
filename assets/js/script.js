@@ -330,9 +330,18 @@ $(function () {
 
 		// Call the renderProductsPage.
 		// As it's argument give the object with filtered products.
-		renderProductsPage(results);
+		if(results && results.length) {
+			renderProductsPage(results);
+		} else {
+			renderEmptyPage();
+		}
 	}
 
+	// Shows the empty page.
+	function renderEmptyPage(){
+		var page = $('.empty');
+		page.addClass('visible');
+	}
 
 	// Shows the error page.
 	function renderErrorPage(){
