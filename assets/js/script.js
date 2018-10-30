@@ -168,7 +168,7 @@ $(function () {
 			},
 			// Single Products page.
 			'#cart': function() {
-				cart.renderCart();
+				cart.renderCart(products);
 			}
 
 		};

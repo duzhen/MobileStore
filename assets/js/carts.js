@@ -1,24 +1,22 @@
 var cart;
 (function () {
 //Shopping cart
-    var carts = JSON.parse(localStorage.getItem('shoppingcarts'));
-    var products;
+    var carts;
     cart = {
-        init: function(p) {
-            products = p;
+        
+        init: function(products) {
+            carts = JSON.parse(localStorage.getItem('shoppingcarts'));
             console.log(carts)
             if(!carts) {
                 carts = {}
-            } else {
-                cart.setCarts(carts);
             }
             var clearBtn = $('.shopping-cart button');
             clearBtn.on('click', function (e) {
                 e.preventDefault();
-                carts = {};
-                cart.setCarts(carts);
-                cart.renderCart();
+                cart.clear();
+                cart.renderCart(products);
             });
+            return cart.setCarts(carts);
         },
         addCarts: function(index) {
             // If the cart for this specification isn't created yet - do it.
@@ -26,15 +24,22 @@ var cart;
 				carts[index] = 0;
 			}
 			carts[index]++;
-			cart.setCarts(carts);
+			return cart.setCarts(carts);
         },
         setCarts: function(carts) {
             localStorage.setItem('shoppingcarts',JSON.stringify(carts));
             let values = Array.from(Object.values(carts));
-            $('.tempo .cart').text("Cart "+values.reduce((a, b) => a + b, 0))
+            var total = values.reduce((a, b) => a + b, 0)
+            $('.tempo .cart').text("Cart "+total)
+            return total;
         },
 
-        renderCart: function() {
+        clear: function() {
+            carts = {};
+            cart.setCarts(carts);
+            return carts;
+        },
+        renderCart: function(products) {
             var allProducts = $('.all-products .products-list > li');
 
             // Hide all the products in the products list.
