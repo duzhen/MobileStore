@@ -24,7 +24,13 @@ $(function () {
 
 
 	//	Event handlers for frontend navigation
-
+	var clearBtn = $('.shopping-cart button');
+	clearBtn.on('click', function (e) {
+		localStorage.setItem('shoppingcarts', '{}');
+		carts = {};
+		setShoppingCart(carts);
+		renderShoppingCartPage(carts);
+	});
 	//	Checkbox filtering
 
 	var checkboxes = $('.all-products input[type=checkbox]');
