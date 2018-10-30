@@ -4,15 +4,7 @@ $(function () {
 
 		// 	An array containing objects with information about the products.
 	var products = [],
-		//Shopping cart
-		carts = JSON.parse(localStorage.getItem('shoppingcarts'));
-		console.log(carts)
-		if(!carts) {
-			carts = {}
-		} else {
-			setShoppingCart(carts);
-		}
-		
+
 		// Our filters object will contain an array of values for each filter
 
 		// Example:
@@ -21,16 +13,8 @@ $(function () {
 		//		"storage" = [16]
 		//	}
 		filters = {};
-
-
 	//	Event handlers for frontend navigation
-	var clearBtn = $('.shopping-cart button');
-	clearBtn.on('click', function (e) {
-		localStorage.setItem('shoppingcarts', '{}');
-		carts = {};
-		setShoppingCart(carts);
-		renderShoppingCartPage(carts);
-	});
+
 	//	Checkbox filtering
 
 	var checkboxes = $('.all-products input[type=checkbox]');
@@ -107,6 +91,7 @@ $(function () {
 
 	});
 
+
 	// These are called on page load
 
 	// Get data about our products from products.json.
@@ -117,7 +102,8 @@ $(function () {
 
 		// Call a function to create HTML for all the products.
 		generateAllProductsHTML(products);
-
+		// Shopping Cart init
+		cart.init(products);
 		// Manually trigger a hashchange to start the app.
 		$(window).trigger('hashchange');
 	});
@@ -182,7 +168,7 @@ $(function () {
 			},
 			// Single Products page.
 			'#cart': function() {
-				renderShoppingCartPage(carts);
+				cart.renderCart();
 			}
 
 		};
@@ -198,10 +184,6 @@ $(function () {
 
 	}
 
-	function setShoppingCart(carts) {
-		let values = Array.from(Object.values(carts));
-		$('.tempo .cart').text("Cart "+values.reduce((a, b) => a + b, 0))
-	}
 
 	// This function is called only once - on page load.
 	// It fills up the products list via a handlebars template.
@@ -231,14 +213,7 @@ $(function () {
 			// e.preventDefault();
 			
 			var productIndex = $(this).data('index');
-
-			// If the cart for this specification isn't created yet - do it.
-			if(!carts[productIndex]){
-				carts[productIndex] = 0;
-			}
-			carts[productIndex]++;
-			setShoppingCart(carts);
-			localStorage.setItem('shoppingcarts',JSON.stringify(carts));
+			cart.addCarts(productIndex);
 			e.stopPropagation();
 		})
 	}
@@ -385,31 +360,7 @@ $(function () {
 		var page = $('.error');
 		page.addClass('visible');
 	}
-	// Render shopping cart page
-	function renderShoppingCartPage(data){
-		var allProducts = $('.all-products .products-list > li');
 
-		// Hide all the products in the products list.
-		allProducts.addClass('hidden');
-
-		var page = $('.shopping-cart');
-		var list = $('.shopping-cart .shopping-cart-list');
-
-		var theTemplateScript = $("#shopping-cart-template").html();
-		//Compile the template
-		var theTemplate = Handlebars.compile (theTemplateScript);
-		var results = []
-		products.forEach(function (item){
-			if(data[item.id]) {
-				item.quantity = data[item.id]
-				results.push(item)
-			}
-		});
-		$('.shopping-cart .shopping-cart-list li').remove();
-		list.append (theTemplate(results));
-		// Show the page.
-		page.addClass('visible');
-	}
 	// Get the filters object, turn it into a string and write it into the hash.
 	function createQueryHash(filters){
 
