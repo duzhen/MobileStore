@@ -5,7 +5,14 @@ $(function () {
 		// 	An array containing objects with information about the products.
 	var products = [],
 		//Shopping cart
-		carts = {},
+		carts = JSON.parse(localStorage.getItem('shoppingcarts'));
+		console.log(carts)
+		if(!carts) {
+			carts = {}
+		} else {
+			setShoppingCart(carts);
+		}
+		
 		// Our filters object will contain an array of values for each filter
 
 		// Example:
@@ -185,6 +192,10 @@ $(function () {
 
 	}
 
+	function setShoppingCart(carts) {
+		let values = Array.from(Object.values(carts));
+		$('.tempo .cart').text("Cart "+values.reduce((a, b) => a + b, 0))
+	}
 
 	// This function is called only once - on page load.
 	// It fills up the products list via a handlebars template.
@@ -220,16 +231,16 @@ $(function () {
 				carts[productIndex] = 0;
 			}
 			carts[productIndex]++;
-			let values = Array.from(Object.values(carts));
-			$('.tempo .cart').text("Cart "+values.reduce((a, b) => a + b, 0))
-			console.log(carts)
+			setShoppingCart(carts);
+			localStorage.setItem('shoppingcarts',JSON.stringify(carts));
 			e.stopPropagation();
 		})
 	}
 
 	// This function receives an object containing all the product we want to show.
 	function renderProductsPage(data){
-
+		var shoppingCarts = $('.shopping-cart .shopping-cart-list > li');
+		shoppingCarts.addClass('hidden');
 		var page = $('.all-products'),
 			allProducts = $('.all-products .products-list > li');
 
@@ -370,6 +381,11 @@ $(function () {
 	}
 	// Render shopping cart page
 	function renderShoppingCartPage(data){
+		var allProducts = $('.all-products .products-list > li');
+
+		// Hide all the products in the products list.
+		allProducts.addClass('hidden');
+
 		var page = $('.shopping-cart');
 		var list = $('.shopping-cart .shopping-cart-list');
 

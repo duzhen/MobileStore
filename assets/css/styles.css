@@ -419,11 +419,16 @@ header h2.tempo a{
 	Shopping Cart Page
 ----------------------------*/
 .shopping-cart{
-	pointer-events: all;
+	opacity: 0;
 	position: absolute;
 	left: 0;
 	top: 100px;
 	width: 100%;
+	pointer-events: none;
+}
+.shopping-cart.visible{
+	opacity: 1;
+	pointer-events: auto;
 }
 .shopping-cart-list > li{
 	box-shadow : 0 0 20px 8px #f3f3f3 inset;
@@ -434,16 +439,14 @@ header h2.tempo a{
 	width: 45px;
 	margin-right: 20px;
 	float: left;
+	pointer-events: none;
 }
 .shopping-cart-list .quantity{
 	float: right;
-
 	color:  #4e4e4e;
 	font-weight: bold;
 	font-size: 20px;
-
 	padding-top: 6px;
-	margin: 0;
 }
 
 .shopping-cart-list h2{
@@ -453,41 +456,19 @@ header h2.tempo a{
 	overflow: hidden;
 	text-overflow:ellipsis;
 	max-width: 200px;
-	margin:0;
-}
-.shopping-cart-list h3{
-	display: inline-block;
-	font-size: 16px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow:ellipsis;
-	max-width: 200px;
-	margin:0;
+	margin-right: 10px;
 }
 .shopping-cart-list .product-description{
 	text-align: left;
 }
 .shopping-cart-list .product-description li{
 	display: inline-block;
-	margin-right: 5px;
+	margin-right: 10px;
 }
 
 .shopping-cart-list .product-description li span{
 	font-weight: bold;
 }
-
-.shopping-cart-list .highlight{
-	position: absolute;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background-color: rgba(0,0,0,0.1);
-	opacity: 0;
-	transition: 0.4s;
-	pointer-events: none;
-}
-
 .shopping-cart-list > li:hover{
 	opacity: 1;
 }
