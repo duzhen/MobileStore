@@ -298,6 +298,7 @@ header h2.tempo a{
 	background-color: rgba(0,0,0,0.1);
 	opacity: 0;
 	transition: 0.4s;
+	pointer-events: none;
 }
 
 .products-list > li:hover .highlight{
@@ -360,7 +361,6 @@ header h2.tempo a{
 	transition: 0.4s;
 
 }
-
 .single-product.visible .preview-large{
 	opacity: 1;
 	transition: 1.4s;
@@ -395,9 +395,9 @@ header h2.tempo a{
 
 
 /*---------------------------
-	Error Page
+	Error Empty Page
 ----------------------------*/
-
+.empty,
 .error{
 	opacity: 0;
 	transition: 0.6s;
@@ -407,34 +407,87 @@ header h2.tempo a{
 	top: 100px;
 	width: 100%;
 }
-
+.empty.visible,
 .error.visible{
 	opacity: 1;
 }
-
+.empty h3
 .error h3{
 	font-size: 40px;
 }
-
-
 /*---------------------------
-	Empty Page
+	Shopping Cart Page
 ----------------------------*/
-
-.empty{
-	opacity: 0;
-	transition: 0.6s;
-	pointer-events: none;
+.shopping-cart{
+	pointer-events: all;
 	position: absolute;
 	left: 0;
 	top: 100px;
 	width: 100%;
 }
+.shopping-cart-list > li{
+	box-shadow : 0 0 20px 8px #f3f3f3 inset;
+	padding: 20px 40px;
+	text-align: left;
+}
+.shopping-cart-list .product-photo{
+	width: 45px;
+	margin-right: 20px;
+	float: left;
+}
+.shopping-cart-list .quantity{
+	float: right;
 
-.empty.visible{
-	opacity: 1;
+	color:  #4e4e4e;
+	font-weight: bold;
+	font-size: 20px;
+
+	padding-top: 6px;
+	margin: 0;
 }
 
-.empty h3{
-	font-size: 40px;
+.shopping-cart-list h2{
+	display: inline-block;
+	font-size: 18px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	max-width: 200px;
+	margin:0;
+}
+.shopping-cart-list h3{
+	display: inline-block;
+	font-size: 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	max-width: 200px;
+	margin:0;
+}
+.shopping-cart-list .product-description{
+	text-align: left;
+}
+.shopping-cart-list .product-description li{
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.shopping-cart-list .product-description li span{
+	font-weight: bold;
+}
+
+.shopping-cart-list .highlight{
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-color: rgba(0,0,0,0.1);
+	opacity: 0;
+	transition: 0.4s;
+	pointer-events: none;
+}
+
+.shopping-cart-list > li:hover{
+	opacity: 1;
 }

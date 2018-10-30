@@ -4,7 +4,8 @@ $(function () {
 
 		// 	An array containing objects with information about the products.
 	var products = [],
-
+		//Shopping cart
+		carts = {},
 		// Our filters object will contain an array of values for each filter
 
 		// Example:
@@ -93,7 +94,6 @@ $(function () {
 
 	});
 
-
 	// These are called on page load
 
 	// Get data about our products from products.json.
@@ -166,6 +166,10 @@ $(function () {
 				}
 
 				renderFilterResults(filters, products);
+			},
+			// Single Products page.
+			'#cart': function() {
+				renderShoppingCartPage(carts);
 			}
 
 		};
@@ -204,6 +208,22 @@ $(function () {
 			var productIndex = $(this).data('index');
 
 			window.location.hash = 'product/' + productIndex;
+		})
+
+		list.find('button').on('click', function (e) {
+			// e.preventDefault();
+			
+			var productIndex = $(this).data('index');
+
+			// If the cart for this specification isn't created yet - do it.
+			if(!carts[productIndex]){
+				carts[productIndex] = 0;
+			}
+			carts[productIndex]++;
+			let values = Array.from(Object.values(carts));
+			$('.tempo .cart').text("Cart "+values.reduce((a, b) => a + b, 0))
+			console.log(carts)
+			e.stopPropagation();
 		})
 	}
 
@@ -348,7 +368,26 @@ $(function () {
 		var page = $('.error');
 		page.addClass('visible');
 	}
+	// Render shopping cart page
+	function renderShoppingCartPage(data){
+		var page = $('.shopping-cart');
+		var list = $('.shopping-cart .shopping-cart-list');
 
+		var theTemplateScript = $("#shopping-cart-template").html();
+		//Compile the template
+		var theTemplate = Handlebars.compile (theTemplateScript);
+		var results = []
+		products.forEach(function (item){
+			if(data[item.id]) {
+				item.quantity = data[item.id]
+				results.push(item)
+			}
+		});
+		$('.shopping-cart .shopping-cart-list li').remove();
+		list.append (theTemplate(results));
+		// Show the page.
+		page.addClass('visible');
+	}
 	// Get the filters object, turn it into a string and write it into the hash.
 	function createQueryHash(filters){
 

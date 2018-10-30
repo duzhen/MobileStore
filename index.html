@@ -14,7 +14,7 @@
 <body>
 
 	<header class="compact">
-		<h2 class="tempo"><a href="http://tempo.io/">Back to Tempo's website</a></h2>
+		<h2 class="tempo"><a class="cart" href="#cart">Cart 0</a></h2>
 		<h1><a href="#">Tempo Mobile Store</a></h1>
 	</header>
 
@@ -74,7 +74,7 @@
 								<li><span>OS: </span>{{specs.os}}</li>
 								<li><span>Camera: </span>{{specs.camera}} Mpx</li>
 							</ul>
-							<button>Buy Now!</button>
+							<button data-index="{{id}}">Buy Now!</button>
 							<p class="product-price">{{price}}$</p>
 							<div class="highlight"></div>
 						</li>
@@ -99,6 +99,30 @@
 
 		</div>
 
+		<div class="shopping-cart page">
+
+			<ul class="shopping-cart-list">
+				<script id="shopping-cart-template" type="x-handlebars-template">
+					{{#each this}}
+						<li data-index="{{id}}">
+							<a href="#" class="product-photo"><img src="{{image.small}}" height="45" alt="{{name}}"/></a>
+								<h2>{{name}}</h2>
+								<h2>{{price}}$</h2>
+								<a class="quantity">x{{quantity}}</a>
+								<ul class="product-description">
+									<li><span>Manufacturer: </span>{{specs.manufacturer}}</li>
+									<li><span>Storage: </span>{{specs.storage}} GB</li>
+									<li><span>OS: </span>{{specs.os}}</li>
+									<li><span>Camera: </span>{{specs.camera}} Mpx</li>
+								</ul>
+							
+							<div class="highlight"></div>
+						</li>
+					{{/each}}
+				</script>
+			</ul>
+
+		</div>
 		<div class="error page">
 			<h3>Sorry, something went wrong :(</h3>
 		</div>
